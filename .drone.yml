@@ -1,0 +1,19 @@
+kind: pipeline
+name: default
+
+steps:
+- name: build-and-publish-to-docker
+  image: plugins/docker
+  settings:
+    repo: jackharrhy/duaas
+    auto_tag: true
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+  when:
+    event:
+      when:
+        ref:
+          include:
+          - refs/tags/v*
