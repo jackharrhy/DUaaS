@@ -97,7 +97,7 @@ fn index() -> &'static str {
 
     GET /ecoji
 
-      read and return 128 lines from /dev/urandom as base64,
+      read and return 128 lines from /dev/urandom as base64
       interpreted as emoji using ecoji
 
     GET /ecoji/<usize>
