@@ -4,6 +4,8 @@
 [![Build Status](https://drone.jackharrhy.com/api/badges/jackharrhy/DUaaS/status.svg)](https://drone.jackharrhy.com/jackharrhy/DUaaS)
 <a href="https://hub.docker.com/r/jackharrhy/duaas"><a href="https://microbadger.com/images/jackharrhy/duaas" title="Get your own image badge on microbadger.com"><img src="https://images.microbadger.com/badges/image/jackharrhy/duaas.svg"></a></a>
 
+![a selection of GET /ecoji/1000 displayed in a browser](https://i.imgur.com/KF4gskb.jpg)
+
 ### GET /binary
 
 > read and return 128 lines from /dev/urandom as binary
