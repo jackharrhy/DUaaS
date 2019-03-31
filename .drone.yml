@@ -11,9 +11,7 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-  when:
-    event:
-      when:
-        ref:
-          include:
-          - refs/tags/v*
+
+trigger:
+  event:
+  - tag
