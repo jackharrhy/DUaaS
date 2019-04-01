@@ -4,9 +4,9 @@
 extern crate base64;
 extern crate ecoji;
 
-use std::str;
 use std::fs::File;
 use std::io::Read;
+use std::str;
 
 fn grab_random_bytes(amount: usize) -> Vec<u8> {
     let mut urandom = File::open("/dev/urandom").unwrap();
@@ -108,14 +108,17 @@ fn index() -> &'static str {
 
 fn main() {
     rocket::ignite()
-        .mount("/", routes![
-            index,
-            return_128_bytes,
-            return_specified_bytes,
-            return_128_bytes_as_base64,
-            return_specified_bytes_as_base_64,
-            return_128_bytes_as_ecoji,
-            return_specified_bytes_as_ecoji,
-        ])
+        .mount(
+            "/",
+            routes![
+                index,
+                return_128_bytes,
+                return_specified_bytes,
+                return_128_bytes_as_base64,
+                return_specified_bytes_as_base_64,
+                return_128_bytes_as_ecoji,
+                return_specified_bytes_as_ecoji,
+            ],
+        )
         .launch();
 }
