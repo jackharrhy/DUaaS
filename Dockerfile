@@ -1,4 +1,4 @@
-FROM ekidd/rust-musl-builder:nightly AS builder
+FROM ekidd/rust-musl-builder:nightly-2020-04-10 AS builder
 
 ADD . ./
 
