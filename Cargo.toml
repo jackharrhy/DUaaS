@@ -7,4 +7,4 @@ edition = "2018"
 [dependencies]
 base64 = "0.10.1"
 ecoji = "1.0"
-rocket = "0.4.4"
+rocket = "0.4.7"
