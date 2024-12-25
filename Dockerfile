@@ -1,14 +1,23 @@
-FROM ekidd/rust-musl-builder:nightly-2020-04-10 AS builder
+FROM rust:alpine as builder
 
-ADD . ./
+WORKDIR /app/src
 
-RUN sudo chown -R rust:rust /home/rust
+RUN apk add pkgconfig openssl-dev libc-dev
 
+RUN apk add --no-cache rustup \
+    && rustup toolchain install nightly \
+    && rustup default nightly
+
+COPY ./ ./
 RUN cargo build --release
 
 FROM alpine:latest
-COPY --from=builder \
-    /home/rust/src/target/x86_64-unknown-linux-musl/release/duaas \
-    /usr/local/bin/
+WORKDIR /app
+#RUN apk update \
+#    && apk add openssl ca-certificates
 
-CMD /usr/local/bin/duaas
+COPY --from=builder /app/src/target/release/duaas /app/duaas
+
+ENV ROCKET_ADDRESS 0.0.0.0
+
+CMD ["/app/duaas"]

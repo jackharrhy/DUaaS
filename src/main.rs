@@ -1,6 +1,6 @@
-#![feature(proc_macro_hygiene, decl_macro, alloc_error_hook)]
+#![feature(alloc_error_hook)]
 
-#[macro_use] extern crate rocket;
+extern crate rocket;
 extern crate base64;
 extern crate ecoji;
 
@@ -11,6 +11,10 @@ use std::panic;
 use std::fs::File;
 use std::io::Read;
 use std::str;
+
+use rocket::{get, routes, launch, Build, Rocket};
+use base64::engine::general_purpose;
+use base64::Engine as _;
 
 fn oom(layout: Layout) {
     panic!("oom {}", layout.size());
@@ -39,7 +43,7 @@ fn grab_random_bytes_as_string(amount: usize) -> Result<String, OOM> {
 
 fn grab_random_base64(amount: usize) -> Result<String, OOM> {
     let buf = grab_random_bytes(amount)?;
-    Ok(base64::encode(&buf))
+    Ok(general_purpose::STANDARD.encode(&buf))
 }
 
 fn grab_random_ecoji(amount: usize) -> Result<String, OOM> {
@@ -139,9 +143,10 @@ fn index() -> &'static str {
       /dev/urandom as base64 interpreted as emoji using ecoji"
 }
 
-fn main() {
+#[launch]
+fn rocket() -> Rocket<Build> {
     set_alloc_error_hook(oom);
-    rocket::ignite()
+    rocket::build()
         .mount(
             "/",
             routes![
@@ -154,5 +159,4 @@ fn main() {
                 return_specified_bytes_as_ecoji,
             ],
         )
-        .launch();
 }
